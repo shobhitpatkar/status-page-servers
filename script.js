@@ -24,6 +24,8 @@ async function updateStatuses() {
     const table = document.getElementById("status-table");
     table.innerHTML = ""; // Clear old data
 
+    const fragment = document.createDocumentFragment();
+
     const results = await Promise.all(
         websites.map(async (site) => {
             const status = await checkStatus(site.url);
@@ -32,17 +34,26 @@ async function updateStatuses() {
     );
 
     results.forEach((site) => {
-        const rowClass = site.status === "online" ? "online-row" : "offline-row";
-        table.innerHTML += `
-            <tr class="${rowClass}">
-                <td>${site.name}</td>
-                <td class="${site.status}">
-                    <span class="status-dot ${site.status}-dot"></span>
-                    ${site.status === 'online' ? 'Online ✅' : 'Offline ❌'}
-                </td>
-            </tr>
+        const row = document.createElement("tr");
+        row.classList.add(site.status === "online" ? "online-row" : "offline-row");
+        row.innerHTML = `
+            <td>${site.name}</td>
+            <td class="${site.status}">
+                <span class="status-dot ${site.status}-dot"></span>
+                ${site.status === 'online' ? 'Online ✅' : 'Offline ❌'}
+            </td>
         `;
+
+        // Make row clickable
+        row.style.cursor = "pointer";
+        row.addEventListener("click", () => {
+            window.location.href = `details.html?name=${encodeURIComponent(site.name)}&url=${encodeURIComponent(site.url)}`;
+        });
+
+        fragment.appendChild(row);
     });
+
+    table.appendChild(fragment);
 }
 
 updateStatuses(); // Run on page load
