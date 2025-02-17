@@ -1,83 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Status Checker</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        table { width: 80%; margin: auto; border-collapse: collapse; }
-        th, td { padding: 10px; border: 1px solid #ddd; }
-        th { background: #f4f4f4; }
-        .online { color: green; font-weight: bold; }
-        .offline { color: red; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <h1>Website Status Checker</h1>
-    <p>Refresh the page to check website availability.</p>
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwfppuTmwgdsBnXyp8m3DIGOkWUvIcEDGEpJ9C7m9L_-5Es-WWSZeVrB5YNAGYeFrDc/exec"
 
-    <table>
-        <thead>
-            <tr>
-                <th>Website</th>
-                <th>URL</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="status-table">
-            <tr><td colspan="3">Loading...</td></tr>
-        </tbody>
-    </table>
+// Example Usage:
+const status_data = {
+    timestamp: '2025-02-14 15:29:14',
+    date: '17 Feb',
+    hour: 6,
+    server_id: 'will-wallet-test',
+    server_url: 'http://13.211.41.148:3007/api/v1/test',
+    status: 'online'
+    };
 
-    <script>
-        const websites = [
-            { name: "ecom-dev", url: "https://devapi.ecomsuite.io/api/v1/join-beta" },
-            { name: "ecom-test", url: "https://testapi.ecomsuite.io/api/v1/join-beta" },
-            { name: "ecom-prod", url: "https://api.ecomsuite.io/api/v1/join-beta" },
-            { name: "will-wallet-dev", url: "http://54.252.194.80:3007/api/v1/test" },
-            { name: "will-wallet-test", url: "http://13.211.41.148:3007/api/v1/test" },
-            { name: "will-wallet-prod", url: "http://3.24.154.7:3007/api/v1/test" }
-        ];
+async function sendData() {
+    // Example Usage:
+    const status_data = {
+        timestamp: '2025-02-14 15:29:14',
+        date: '17 Feb',
+        hour: 6,
+        server_id: 'will-wallet-test',
+        server_url: 'http://13.211.41.148:3007/api/v1/test',
+        status: 'online'
+        };
 
-        async function checkStatus(url) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000); // 10-second timeout
+    const response = await fetch(SHEET_API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            timestamp: status_data.timestamp,
+            date: status_data.date,
+            hour: status_data.hour,
+        }),
+    });
 
-            try {
-                const response = await fetch(url, { signal: controller.signal });
-                clearTimeout(timeoutId); // Clear timeout if response is received
-                return response.ok ? "online" : "offline";
-            } catch (error) {
-                return "offline";
-            }
-        }
+    let result = await response.text();
+    console.log(result);
+}
 
-        async function updateStatuses() {
-            const table = document.getElementById("status-table");
-            table.innerHTML = ""; // Clear previous content
-
-            const results = await Promise.all(
-                websites.map(async (site) => {
-                    const status = await checkStatus(site.url);
-                    return { ...site, status };
-                })
-            );
-
-            results.forEach((site) => {
-                table.innerHTML += `
-                    <tr>
-                        <td>${site.name}</td>
-                        <td><a href="${site.url}" target="_blank">${site.url}</a></td>
-                        <td class="${site.status === 'online' ? 'online' : 'offline'}">
-                            ${site.status === 'online' ? '✅ Online' : '❌ Offline'}
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        updateStatuses(); // Run on page load
-    </script>
-</body>
-</html>
+// Example usage
+sendData();
