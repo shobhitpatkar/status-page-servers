@@ -1,6 +1,7 @@
 # How to save status page
 
-1. **Go to status page deployed site**  - [Status Page Link](https://shobhitpatkar.github.io/status-page-servers){:target="_blank"}
+1. **Go to status page deployed site**  - <a href="https://shobhitpatkar.github.io/status-page-servers" target="_blank">Status Page Link</a>
+
 
 
 2. **Save the web page with `Ctrl + S`**, name it as **"Sosimtech Servers.html"** and then press enter.  
