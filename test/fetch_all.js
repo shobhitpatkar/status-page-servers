@@ -1,4 +1,4 @@
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxeCf8mkh2aPZ0C9CljPhSi6DtqQNO2fRQdmxrGy0HKDdIp6GRAZMcv_nvQCfKPcqoGAQ/exec";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzXamZuGOwVeG_L80cPjG0kdkGIh12tP0YFGYTncAHUg8ASOluyE8A20_zt9P_U3kroPg/exec"
 
 async function fetchData() {
     try {
