@@ -15,9 +15,9 @@ async function checkStatus(url) {
 async function updateStatuses() {
 
     const websites = [
-        { name: "ecom-dev", url: "https://devapi.ecomsuite.io/api/v1/join-beta" },
-        { name: "ecom-test", url: "https://testapi.ecomsuite.io/api/v1/join-beta" },
-        { name: "ecom-prod", url: "https://api.ecomsuite.io/api/v1/join-beta" },
+        { name: "ecom-dev", url: "https://devapi.ecomsuite.io/api/v1/ping" },
+        { name: "ecom-test", url: "https://testapi.ecomsuite.io/api/v1/ping" },
+        { name: "ecom-prod", url: "https://api.ecomsuite.io/api/v1/ping" },
         { name: "will-wallet-dev", url: "http://54.252.194.80:3007/api/v1/test" },
         { name: "will-wallet-test", url: "https://test.admin.willwallet.com.au/api/v1/test" },
         { name: "will-wallet-prod", url: "http://3.24.154.7:3007/api/v1/test" }
